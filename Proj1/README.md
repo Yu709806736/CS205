@@ -9,6 +9,7 @@
 ### Usage
     python main.py --file 1.in
 and  
+
     python plot.py
 ### Result - comparison of the three algorithms
 A* terminated after 5 seconds  
