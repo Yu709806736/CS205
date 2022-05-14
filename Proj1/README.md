@@ -9,3 +9,9 @@
 ### Usage
     python main.py --file 1.in
     python plot.py
+### Result - comparison of the three algorithms
+A* terminated after 5 seconds  
+- Total number of expanded nodes w.r.t. depths for each algorithm:  
+![image1](https://github.com/Yu709806736/CS205/blob/main/Proj1/nodes_expanded_depth.jpg)
+- Running time w.r.t. depths for each algorithm:
+![image2](https://github.com/Yu709806736/CS205/blob/main/Proj1/time_depth.jpg)
