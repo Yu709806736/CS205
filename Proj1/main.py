@@ -1,5 +1,3 @@
-import copy
-
 from Proj1.Astar import state, a_star
 import sys
 import argparse
@@ -58,4 +56,4 @@ if __name__ == '__main__':
     interval = input('Please choose the evaluation interval, i.e., check the current state after how many steps:\n')
     interval = int(interval)
 
-    _, _, _, final = a_star(init_puzzle, algo, interval)
+    _, _, _, t = a_star(init_puzzle, algo, interval)
