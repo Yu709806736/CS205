@@ -112,7 +112,6 @@ class state:
     """
         the following four methods will help Priority queue to determine the object with higher priority
     """
-
     def __lt__(self, other):
         return self.fx < other.fx
 
@@ -139,7 +138,17 @@ class state:
         return s
 
 
-def a_star(init_puzzle: List[List[int]], algo: int = 1, interval: int = 1, time_limit=10, prt_path=True) -> Tuple:
+def a_star(init_puzzle: List[List[int]], algo=1, interval=1, time_limit=10, prt_path=True, prt_time=True) -> Tuple:
+    """
+    :param init_puzzle: initial puzzle
+    :param algo: see class state @param dis_method
+    :param interval: evaluation interval
+    :param time_limit: time limit of the algorithm
+    :param prt_path: whether print the solution's path
+    :param prt_time: whether print the algorithm's running time
+    :return: Tuple containing depth, number of node expanded, maximum size of the queue, and the
+    """
+    start = time.time()
     init_state = state(init_puzzle, 0, algo)  # create initial state object
     if init_state.is_goal:
         print('Step {0}: {1}'.format(0, init_state))
@@ -147,7 +156,7 @@ def a_star(init_puzzle: List[List[int]], algo: int = 1, interval: int = 1, time_
         print('Solution depth was {}'.format(0))
         print('Number of nodes expanded: {}'.format(0))
         print('Max queue size: {}'.format(0))
-        return 0, 0, 0, None
+        return 0, 0, 0, 0
     # create visited dictionary: value[0]: 1 for added into queue, 2 for popped from queue, value[1]: g(x)
     visited = {init_state.to_tuple(): [1, 0]}
     pq = PriorityQueue()  # create priority queue
@@ -155,11 +164,8 @@ def a_star(init_puzzle: List[List[int]], algo: int = 1, interval: int = 1, time_
     step = 0  # record the number of steps
     node = 1  # record the number of nodes expanded
     queue_max = 1  # record the maximum queue length
-    start = time.time()
     while not pq.empty() and time.time() - start <= time_limit:
         f, st = pq.get()  # get the current best state in queue
-        # if st.puzzle not in visited:
-        #     visited.append(st.puzzle)
         tup = st.to_tuple()
         if visited.get(tup)[0] <= 1:
             visited[tup][0] = 2
@@ -191,10 +197,13 @@ def a_star(init_puzzle: List[List[int]], algo: int = 1, interval: int = 1, time_
                   'Max queue size: {1}'.format(node, queue_max), file=sys.stderr)
         else:
             print('{0}s Time Limit Exceeded.'.format(time_limit))
-        return 0, -1, 0, None
+        return 0, -1, 0, time_limit
+    t = round((time.time()-start), 3)
     if prt_path:
         print_path(final)
-    return depth, step, queue_max, final
+    if prt_time:
+        print('Algorithm takes: {} seconds.'.format(t))
+    return depth, step, queue_max, t
 
 
 def print_path(final: state):
