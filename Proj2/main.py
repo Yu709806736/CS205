@@ -18,7 +18,6 @@ if __name__ == '__main__':
         for i, file_path in enumerate(files):
             print('\t{0}) {1}'.format(i+1, file_path))
     file = input('Enter the path directly if your file is not in the list\n')
-    dataset = os.path.splitext(file.split('\\')[-1])[0]
     try:
         # if input is a number - read file from the data directory
         select = int(file)
@@ -28,6 +27,8 @@ if __name__ == '__main__':
             dataset = 'large'
         elif file.lower().find('small') != -1:
             dataset = 'small'
+        else:
+            dataset = os.path.splitext(file.split('\\')[-1])[0]
     except Exception:
         pass
     algo = int(input('Type the number of the algorithm you want to run.\n'
@@ -66,18 +67,22 @@ if __name__ == '__main__':
     # modify x-ticks to make it look better
     # refer to https://blog.csdn.net/Poul_henry/article/details/82590392
     new_feat_sets = ['' for _ in range(len(feat_sets))]
-    for i in range(len(feat_sets)):
-        if len(feat_sets[i].split(',')) == (data.shape[1] + 3) // 2:
-            new_feat_sets[i] = '{omit for space}'
-            # tick.set_text('{omit for space}')
-        elif len(feat_sets[i].split(',')) <= 4:
-            new_feat_sets[i] = feat_sets[i]
-    plt.xticks(feat_sets, new_feat_sets)
-    fig.set_size_inches(20, 4)
-    for i, tick in enumerate(ax.get_xticklabels()):
-        s = new_feat_sets[i]
-        if not s == '{omit for space}' and not s == '' and not s == '{All features}':
+    if len(feat_sets) >= 10:
+        for i in range(len(feat_sets)):
+            if len(feat_sets[i].split(',')) == (data.shape[1] + 3) // 2:
+                new_feat_sets[i] = '{omit for space}'
+                # tick.set_text('{omit for space}')
+            elif len(feat_sets[i].split(',')) <= 4:
+                new_feat_sets[i] = feat_sets[i]
+        plt.xticks(feat_sets, new_feat_sets)
+        for i, tick in enumerate(ax.get_xticklabels()):
+            s = new_feat_sets[i]
+            if not s == '{omit for space}' and not s == '' and not s == '{All features}':
+                tick.set_rotation(30)
+    else:
+        for i, tick in enumerate(ax.get_xticklabels()):
             tick.set_rotation(30)
+    fig.set_size_inches(5, 5)
     plt.savefig('output/{0}_{1}_{2}.jpg'.format(dataset, algo, round(end-start, 3)), bbox_inches='tight')
     print(round(end-start, 3))
     plt.show()
