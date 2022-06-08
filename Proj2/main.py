@@ -78,6 +78,6 @@ if __name__ == '__main__':
         s = new_feat_sets[i]
         if not s == '{omit for space}' and not s == '' and not s == '{All features}':
             tick.set_rotation(30)
-    plt.savefig('{0}_{1}_{2}.jpg'.format(dataset, algo, round(end-start, 3)), bbox_inches='tight')
+    plt.savefig('output/{0}_{1}_{2}.jpg'.format(dataset, algo, round(end-start, 3)), bbox_inches='tight')
     print(round(end-start, 3))
     plt.show()
