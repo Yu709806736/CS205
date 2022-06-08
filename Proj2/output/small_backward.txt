@@ -100,5 +100,4 @@ Feature set {1,6} was best, accuracy is 95.0%
 (Warning, Accuracy has decreased! Continuing search in case of local maxima)
 Feature set {1} was best, accuracy is 86.33%
 
-
 Finished search!! The best feature subset is {1,6}, which has an accuracy of 95.0%
